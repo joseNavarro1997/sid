@@ -3,12 +3,12 @@ package com.example.myapplication;
 
 
 import android.os.Bundle;
-
-//package com.example.fbobillo.testapplication3;
-import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+//package com.example.fbobillo.testapplication3;
 
 
 public class MainActivity extends AppCompatActivity
@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity
             Log.i(TAG, "onCreate: About to create MyAsyncTask");
             myTask = new MyAsyncTask(this);
             myTask.execute("http://developer.android.com");
+            myTask.doInBackground("http://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=49df8b7abe7e3c84de808135a5cc73d2&format=json");
         }
         else
             myTask.attach(this);
