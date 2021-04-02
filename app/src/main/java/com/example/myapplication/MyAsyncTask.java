@@ -25,16 +25,24 @@ public class MyAsyncTask extends AsyncTask<String, Void, Integer>
     protected Integer doInBackground(String... params)
     {
         HttpURLConnection connection;
+
+        Log.i("MyAsyncTask","doInBackground().DEBUG_0");
+
         try {
             connection = (HttpURLConnection) new URL(params[0]).openConnection();
             return connection.getResponseCode();
+            /*
             try {
-                InputStream in =new BufferedInputStream(connection.getInputStream());
+                InputStream in = new BufferedInputStream(connection.getInputStream());
+
                 String recibido = in.toString();
-                Log.i("Recibido",recibido);
+
+                Log.i("Recibido","recibido");
+
             } finally {
                 connection.disconnect();
             }
+            */
         } catch (IOException e) {
             e.printStackTrace();
         }

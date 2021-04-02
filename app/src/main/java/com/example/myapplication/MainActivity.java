@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity
 {
-    private final static String TAG = "MainActivity";
+    private final static String TAG = "Practica 4";
     private MyAsyncTask myTask = null;
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -28,7 +28,9 @@ public class MainActivity extends AppCompatActivity
             Log.i(TAG, "onCreate: About to create MyAsyncTask");
             myTask = new MyAsyncTask(this);
             myTask.execute("http://developer.android.com");
-            myTask.doInBackground("http://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=49df8b7abe7e3c84de808135a5cc73d2&format=json");
+
+            myTask.doInBackground("http://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=1ae9a4b4ce337d4b29b7770f405e558c&format=json");
+            Log.i(TAG, "onCreate: DEBUG 1");
         }
         else
             myTask.attach(this);
