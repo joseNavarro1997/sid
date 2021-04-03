@@ -11,14 +11,15 @@
             Referencias: https://developer.android.com/reference/android/widget/EditText?hl=es
                             https://developer.android.com/reference/android/R.styleable?hl=es#EditText (para mirar campo hint de EditText)
     -->
+
     <EditText
         android:id="@+id/plain_text_input"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Escriba el término de búsqueda..."
         android:inputType="text"
         tools:ignore="MissingConstraints" />
 
-    <!--  android:hint="Escriba el término de búsqueda..." -->
 
 
     <TextView
@@ -30,6 +31,19 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <!-- Botón para la búsqueda
+         (código obtenido de https://developer.android.com/reference/android/widget/Button?hl=es
+          y adaptado con ayuda de Android Studio)
+     -->
+    <Button
+        android:id="@+id/button_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/boton_busqueda"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
     <!--
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -42,4 +56,3 @@
     </com.google.android.material.textfield.TextInputLayout>
     -->
 
-</androidx.constraintlayout.widget.ConstraintLayout>

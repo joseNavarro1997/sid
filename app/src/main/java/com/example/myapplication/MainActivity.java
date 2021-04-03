@@ -3,6 +3,7 @@ package com.example.myapplication;
 
 
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -18,6 +19,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        // Looper // usamos Looper para comportamiento sincrono ?
+
         super.onCreate(savedInstanceState);
         Log.i(TAG, "onCreate");
         setContentView(R.layout.activity_main);
@@ -26,10 +29,12 @@ public class MainActivity extends AppCompatActivity
         if (myTask == null) {
             // Evita crear una AsyncTask cada vez que, por ejemplo, hay una rotación
             Log.i(TAG, "onCreate: About to create MyAsyncTask");
-            myTask = new MyAsyncTask(this);
-            myTask.execute("http://developer.android.com");
+           // myTask = new MyAsyncTask(this);
+            String url_flickr = "http://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=1ae9a4b4ce337d4b29b7770f405e558c&format=json";
 
-            myTask.doInBackground("http://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=1ae9a4b4ce337d4b29b7770f405e558c&format=json");
+            new MyAsyncTask().execute(url_flickr);
+
+           // myTask.doInBackground("");
             Log.i(TAG, "onCreate: DEBUG 1");
         }
         else

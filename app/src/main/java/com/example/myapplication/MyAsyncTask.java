@@ -21,6 +21,11 @@ public class MyAsyncTask extends AsyncTask<String, Void, Integer>
     {
         attach(activity);
     }
+
+    public MyAsyncTask() {
+
+    }
+
     @Override
     protected Integer doInBackground(String... params)
     {
@@ -28,24 +33,38 @@ public class MyAsyncTask extends AsyncTask<String, Void, Integer>
 
         Log.i("MyAsyncTask","doInBackground().DEBUG_0");
 
+       // try {
         try {
             connection = (HttpURLConnection) new URL(params[0]).openConnection();
-            return connection.getResponseCode();
-            /*
-            try {
+            String info = connection.getRequestMethod();
+            Log.i("MyAsyncTask", info);
+            connection.disconnect();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //   return connection.getResponseCode();
+
+
+
+                /*
                 InputStream in = new BufferedInputStream(connection.getInputStream());
 
                 String recibido = in.toString();
 
-                Log.i("Recibido","recibido");
+                 */
 
-            } finally {
-                connection.disconnect();
-            }
-            */
+
+           // } finally {
+           //      connection.disconnect();
+
+        //}
+/*
         } catch (IOException e) {
             e.printStackTrace();
         }
+        */
         return -1;
     }
 
