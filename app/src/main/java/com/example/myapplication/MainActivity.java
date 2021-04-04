@@ -3,7 +3,6 @@ package com.example.myapplication;
 
 
 import android.os.Bundle;
-import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -30,11 +29,12 @@ public class MainActivity extends AppCompatActivity
             // Evita crear una AsyncTask cada vez que, por ejemplo, hay una rotación
             Log.i(TAG, "onCreate: About to create MyAsyncTask");
            // myTask = new MyAsyncTask(this);
-            String url_flickr = "https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=c8dd168f331db0e8fd86fb028391cc72&format=json";
+            String url_flickr = "https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=49df8b7abe7e3c84de808135a5cc73d2&format=json";
 
             new MyAsyncTask().execute(url_flickr);
 
-           // myTask.doInBackground("");
+            String respuesta = new MyAsyncTask().doInBackground(url_flickr);
+            Log.i("La respuesta ha sido:", respuesta);
             Log.i(TAG, "onCreate: DEBUG 1");
         }
         else

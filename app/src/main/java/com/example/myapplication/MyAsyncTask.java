@@ -3,6 +3,7 @@ package com.example.myapplication;
 //package com.example.fbobillo.testapplication3;
 
 import android.os.AsyncTask;
+import android.util.JsonReader;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
@@ -10,11 +11,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import static java.lang.String.valueOf;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyAsyncTask extends AsyncTask<String, Void, String>
 {
@@ -51,7 +51,8 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
             URL url = new URL(params[0]);
             urlConnection = (HttpURLConnection) url.openConnection();
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-
+            //prueba leer lista de imagenes parseando jason
+            List<imagenFlickr> Lista = readJsonStream(in);
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
             String line;
@@ -115,6 +116,77 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
 
     }
 
+    public List<imagenFlickr> readJsonStream(InputStream in) throws IOException {
+        // Nueva instancia JsonReader
+        JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+        try {
+            // Leer Array
+            return leerArrayImagenes(reader);
+        } finally {
+            reader.close();
+        }
+
+    }
+
+    public List leerArrayImagenes(JsonReader reader) throws IOException {
+        // Lista temporal
+        ArrayList imagenes = new ArrayList();
+
+        reader.beginArray();
+        while (reader.hasNext()) {
+            // Leer objeto
+            imagenes.add(leerImagen(reader));
+        }
+        reader.endArray();
+        return imagenes;
+    }
+
+    public imagenFlickr leerImagen(JsonReader reader) throws IOException {
+        String id = null;   //id de la imagen
+        String owner = null;   //owner
+        String secret = null;   //secret
+        String server = null;   //server
+        String farm = null;   //title
+        Boolean ispublic = null; //isPublic
+        Boolean isfriend = null; //isfriend
+        Boolean isfamily = null; //isfamily
+        // List<String> hastags = null;    //lista de hashtags
+        reader.beginObject();
+        while (reader.hasNext()) {
+            String name = reader.nextName();
+            switch (name) {
+                case "id":
+                    id = reader.nextString();
+                    break;
+                case "owner":
+                    owner = reader.nextString();
+                    break;
+                case "secret":
+                    secret = reader.nextString();
+                    break;
+                case "server":
+                    server = reader.nextString();
+                    break;
+                case "farm":
+                    farm = reader.nextString();
+                    break;
+                case "ispublic":
+                    ispublic = Boolean.valueOf(reader.nextString());
+                    break;
+                case "isfriend":
+                    isfriend = Boolean.valueOf(reader.nextString());
+                    break;
+                case "isfamily":
+                    isfamily = Boolean.valueOf(reader.nextString());
+                    break;
+                default:
+                    reader.skipValue();
+                    break;
+            }
+        }
+        reader.endObject();
+        return new imagenFlickr(id, owner, secret, server, farm, ispublic, isfriend, isfamily);
+    }
 
     /**
      *
