@@ -18,11 +18,11 @@ public class imagenFlickr {
     String secret = null;   //secret
     String server = null;   //server
     String farm = null;   //title
-    Boolean ispublic = null; //isPublic
-    Boolean isfriend = null; //isfriend
-    Boolean isfamily = null; //isfamily
+    String ispublic = null; //isPublic
+    String isfriend = null; //isfriend
+    String isfamily = null; //isfamily
 
-    public imagenFlickr(String id, String owner, String secret, String server, String farm, Boolean ispublic, Boolean isfriend, Boolean isfamily) {
+    public imagenFlickr(String id, String owner, String secret, String server, String farm, String ispublic, String isfriend, String isfamily) {
         this.id = id;
         this.owner = owner;
         this.secret = secret;
@@ -74,27 +74,27 @@ public class imagenFlickr {
         return farm;
     }
 
-    public Boolean getIspublic() {
+    public String getIspublic() {
         return ispublic;
     }
 
-    public void setIspublic(Boolean ispublic) {
+    public void setIspublic(String ispublic) {
         this.ispublic = ispublic;
     }
 
-    public Boolean getIsfriend() {
+    public String getIsfriend() {
         return isfriend;
     }
 
-    public void setIsfriend(Boolean isfriend) {
+    public void setIsfriend(String isfriend) {
         this.isfriend = isfriend;
     }
 
-    public Boolean getIsfamily() {
+    public String getIsfamily() {
         return isfamily;
     }
 
-    public void setIsfamily(Boolean isfamily) {
+    public void setIsfamily(String isfamily) {
         this.isfamily = isfamily;
     }
     /*

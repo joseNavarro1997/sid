@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity
 
             new MyAsyncTask().execute(url_flickr);
 
-            String respuesta = new MyAsyncTask().doInBackground(url_flickr);
-            Log.i("La respuesta ha sido:", respuesta);
+            //String respuesta = new MyAsyncTask().execute();
+            //Log.i("La respuesta ha sido:", respuesta);
             Log.i(TAG, "onCreate: DEBUG 1");
         }
         else

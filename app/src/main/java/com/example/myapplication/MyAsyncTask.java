@@ -52,7 +52,7 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
             urlConnection = (HttpURLConnection) url.openConnection();
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
             //prueba leer lista de imagenes parseando jason
-            List<imagenFlickr> Lista = readJsonStream(in);
+            //List<imagenFlickr> Lista = readJsonStream(in);
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
             String line;
@@ -128,9 +128,10 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
 
     }
 
-    public List leerArrayImagenes(JsonReader reader) throws IOException {
+    public List<imagenFlickr> leerArrayImagenes(JsonReader reader) throws IOException {
         // Lista temporal
-        ArrayList imagenes = new ArrayList();
+        List<imagenFlickr> imagenes;
+        imagenes = new ArrayList<imagenFlickr>();
 
         reader.beginArray();
         while (reader.hasNext()) {
@@ -147,9 +148,9 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
         String secret = null;   //secret
         String server = null;   //server
         String farm = null;   //title
-        Boolean ispublic = null; //isPublic
-        Boolean isfriend = null; //isfriend
-        Boolean isfamily = null; //isfamily
+        String ispublic = null; //isPublic
+        String isfriend = null; //isfriend
+        String isfamily = null; //isfamily
         // List<String> hastags = null;    //lista de hashtags
         reader.beginObject();
         while (reader.hasNext()) {
@@ -171,13 +172,13 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
                     farm = reader.nextString();
                     break;
                 case "ispublic":
-                    ispublic = Boolean.valueOf(reader.nextString());
+                    ispublic = reader.nextString();
                     break;
                 case "isfriend":
-                    isfriend = Boolean.valueOf(reader.nextString());
+                    isfriend = reader.nextString();
                     break;
                 case "isfamily":
-                    isfamily = Boolean.valueOf(reader.nextString());
+                    isfamily = reader.nextString();
                     break;
                 default:
                     reader.skipValue();
