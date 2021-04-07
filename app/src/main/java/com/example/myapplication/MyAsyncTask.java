@@ -1,5 +1,5 @@
 package com.example.myapplication;
-
+import org.json.*;
 //package com.example.fbobillo.testapplication3;
 
 import android.os.AsyncTask;
@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MyAsyncTask extends AsyncTask<String, Void, String>
@@ -52,9 +53,8 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
             urlConnection = (HttpURLConnection) url.openConnection();
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
             //prueba leer lista de imagenes parseando jason
-            //List<imagenFlickr> Lista = readJsonStream(in);
+            //
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-
             String line;
             while ((line = reader.readLine()) != null) {
                 result.append(line);
@@ -67,56 +67,33 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
             urlConnection.disconnect();
         }
 
-        Log.i("MyAsyncTask -> respuesta! ", result.toString()); //DEBUG
 
+        //Log.i("MyAsyncTask -> respuesta! ", result.toString());//DEBUG
+        List<imagenFlickr> lista = new ArrayList<>();
+        try {
+            //System.out.println(result.toString());
+            String output = result.toString().substring(result.toString().indexOf("\"photo\"") );
+            System.out.println(output);
+            leerDatosJSON(output);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return result.toString();
 
-        /* V2
 
-        HttpURLConnection connection;
-
-        Log.i("MyAsyncTask","doInBackground().DEBUG_0");
-
-       // try {
-        try {
-            connection = (HttpURLConnection) new URL(params[0]).openConnection();
-            String info = connection.getRequestMethod();
-            Log.i("MyAsyncTask", info);
-            connection.disconnect();
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
-
-
-        //   return connection.getResponseCode();
-
-
-
-                /* V1
-                InputStream in = new BufferedInputStream(connection.getInputStream());
-
-                String recibido = in.toString();
-
-                 */
-
-
-           // } finally {
-           //      connection.disconnect();
-
-        //}
-/*
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
-       // return -1;
 
     }
+    public void leerDatosJSON(String datos) throws JSONException {
+        JSONObject json = new JSONObject(datos);
+        JSONArray jsonArray = json.getJSONArray("photo");
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject explrObject = jsonArray.getJSONObject(i);
+        }
 
-    public List<imagenFlickr> readJsonStream(InputStream in) throws IOException {
+
+    }
+    /*
+    public List<imagenFlickr> readJsonStream(String in) throws IOException {
         // Nueva instancia JsonReader
         JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
         try {
@@ -130,15 +107,18 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
 
     public List<imagenFlickr> leerArrayImagenes(JsonReader reader) throws IOException {
         // Lista temporal
-        List<imagenFlickr> imagenes;
-        imagenes = new ArrayList<imagenFlickr>();
 
-        reader.beginArray();
+        List<imagenFlickr> imagenes = new ArrayList();
+        reader.beginObject();
+        Log.i("MyAsyncTask -> imagen! ", "empezado");
+
         while (reader.hasNext()) {
             // Leer objeto
             imagenes.add(leerImagen(reader));
+
         }
-        reader.endArray();
+        System.out.println(imagenes);
+        reader.endObject();
         return imagenes;
     }
 
@@ -155,6 +135,7 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
         reader.beginObject();
         while (reader.hasNext()) {
             String name = reader.nextName();
+            Log.i("MyAsyncTask -> imagen! ", name);
             switch (name) {
                 case "id":
                     id = reader.nextString();
@@ -188,7 +169,7 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
         reader.endObject();
         return new imagenFlickr(id, owner, secret, server, farm, ispublic, isfriend, isfamily);
     }
-
+*/
     /**
      *
      * @param param
