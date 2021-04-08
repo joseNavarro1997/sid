@@ -1,7 +1,6 @@
 package com.example.myapplication;
 import org.json.*;
 //package com.example.fbobillo.testapplication3;
-
 import android.os.AsyncTask;
 import android.util.JsonReader;
 import android.util.Log;
@@ -73,7 +72,7 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
         try {
             //System.out.println(result.toString());
             String output = result.toString().substring(result.toString().indexOf("\"photo\"") );
-            System.out.println(output);
+            //System.out.println(output);
             leerDatosJSON(output);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -84,15 +83,31 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
 
     }
     public void leerDatosJSON(String datos) throws JSONException {
-        JSONObject json = new JSONObject(datos);
-        JSONArray jsonArray = json.getJSONArray("photo");
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject explrObject = jsonArray.getJSONObject(i);
+        //JSONObject json = new JSONObject(datos);
+        List<imagenFlickr> listaImagenes = new ArrayList<imagenFlickr>();
+        for (int i=0; i< datos.length(); i++){
+            String subString = datos.substring(datos.indexOf("{"), datos.indexOf("}")+1);
+            try{
+                JSONObject array = new JSONObject(subString);
+                imagenFlickr imagen = new imagenFlickr(array.getString("id"),array.getString("owner"),
+                        array.getString("secret"), array.getString("server"),
+                        array.getString("farm"), array.getString("ispublic"),
+                        array.getString("isfriend"), array.getString("isfamily"));
+                listaImagenes.add(imagen);
+                System.out.println(imagen.toString());
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+            datos = datos.substring(datos.indexOf("}")+1);
+            //System.out.println(subString);
         }
 
 
+
+
+
     }
-    /*
+/*
     public List<imagenFlickr> readJsonStream(String in) throws IOException {
         // Nueva instancia JsonReader
         JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));

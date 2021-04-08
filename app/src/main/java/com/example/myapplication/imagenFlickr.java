@@ -97,6 +97,10 @@ public class imagenFlickr {
     public void setIsfamily(String isfamily) {
         this.isfamily = isfamily;
     }
+
+    public String toString(){return "id: " + id + ", secret: " + secret + ", server: " + server +
+            ", farm: " + farm + ", ispublic: " + ispublic + ", isfriend: " + isfriend +
+            ", isfamily: " + isfriend;}
     /*
     //métodos GET (devuelven el valor del campo correspondiente)
 
