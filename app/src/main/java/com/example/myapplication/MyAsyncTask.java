@@ -67,7 +67,7 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
         }
 
 
-        //Log.i("MyAsyncTask -> respuesta! ", result.toString());//DEBUG
+        Log.i("MyAsyncTask -> respuesta! ", result.toString());//DEBUG
         List<imagenFlickr> lista = new ArrayList<>();
         try {
             //System.out.println(result.toString());
@@ -92,7 +92,7 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
                 imagenFlickr imagen = new imagenFlickr(array.getString("id"),array.getString("owner"),
                         array.getString("secret"), array.getString("server"),
                         array.getString("farm"), array.getString("ispublic"),
-                        array.getString("isfriend"), array.getString("isfamily"));
+                        array.getString("isfriend"), array.getString("isfamily"), array.getString("title"));
                 listaImagenes.add(imagen);
                 System.out.println(imagen.toString());
             }catch (JSONException e){
