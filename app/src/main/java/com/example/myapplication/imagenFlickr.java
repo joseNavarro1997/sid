@@ -26,12 +26,13 @@ public class imagenFlickr {
 
 
     private String title = null;   //titulo imagen
+    private String tags = null; // REVISAR: ¿son los hashtags que pide el guion ?
     private List<String> hastags = null;    //lista de hashtags
 
     String url_imagen = null; // atributo derivado formado por id, server, secret y tamaño de la foto (size-suffix, que usaremos el "s" que es un cuadrado de 75px), etc. Referencia: https://www.flickr.com/services/api/misc.urls.html
 
 
-    public imagenFlickr(String id, String owner, String secret, String server, String farm, String ispublic, String isfriend, String isfamily, String title) {
+    public imagenFlickr(String id, String owner, String secret, String server, String farm, String ispublic, String isfriend, String isfamily, String title, String tags) {
         this.id = id;
         this.owner = owner;
         this.secret = secret;
@@ -53,6 +54,8 @@ public class imagenFlickr {
         aux = aux.concat("_s.jpg");   //para obtener foto cuadradas y de tamaño de 75px
 
         this.url_imagen = aux;
+
+        this.tags = tags;
     }
 
     /*
@@ -145,9 +148,19 @@ public class imagenFlickr {
         return url_imagen;
     }
 
-    public String toString(){return "id: " + id + ", secret: " + secret + ", server: " + server +
+    public void setTags(String tags){
+        this.tags = tags;
+    }
+
+    public String getTags(){
+        return tags;
+    }
+
+    public String toString(){
+        return "id: " + id + ", secret: " + secret + ", server: " + server +
             ", farm: " + farm + ", ispublic: " + ispublic + ", isfriend: " + isfriend +
-            ", isfamily: " + isfriend + ", title: " + title + ", url_imagen: " + url_imagen;}
+            ", isfamily: " + isfriend + ", tags: " + tags + ", title: " + title + ", url_imagen: " + url_imagen;
+    }
     /*
     //métodos GET (devuelven el valor del campo correspondiente)
 

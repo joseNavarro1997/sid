@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity
             // Evita crear una AsyncTask cada vez que, por ejemplo, hay una rotación
             Log.i(TAG, "onCreate: About to create MyAsyncTask");
            // myTask = new MyAsyncTask(this);
-            String url_flickr = "https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=&format=json";
+            String url_flickr = "https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=f0fdbd3356ec2eb09238097f7f07544f&format=json&extras=tags";    //REVISAR: extras=tags ¿necesario para los hashtag que pide el guion?
 
             new MyAsyncTask().execute(url_flickr);
 
