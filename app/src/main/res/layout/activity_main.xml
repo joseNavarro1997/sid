@@ -31,17 +31,36 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <!-- Botón para la búsqueda
-         (código obtenido de https://developer.android.com/reference/android/widget/Button?hl=es
-          y adaptado con ayuda de Android Studio)
+    <!--
+        <GridLayout
+            android:layout_width="420dp"
+            android:layout_height=""
      -->
+    <!--
+         <TableRow android:layout_marginBottom="@android:dimen/thumbnail_height"
+             tools:ignore="MissingConstraints">
+             <Button
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="@string/boton_busqueda"
+                 tools:ignore="MissingConstraints" />
+
+         </TableRow>
+    -->
+
+
+        <!-- Botón para la búsqueda
+             (código obtenido de https://developer.android.com/reference/android/widget/Button?hl=es
+              y adaptado con ayuda de Android Studio (código predictivo al ir escribiendo, por ejemplo)
+         -->
     <Button
         android:id="@+id/button_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/boton_busqueda"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:translationX="170dp"
+        android:translationY="650dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
     <!--
