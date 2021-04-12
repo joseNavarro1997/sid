@@ -4,7 +4,12 @@ package com.example.myapplication;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,8 +18,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity
 {
+    //Para GUI
+    private ListView listview;
+    private ArrayList<String> names;
+
+    List<imagenFlickr> listaImagenes = new ArrayList<imagenFlickr>();
+
     private final static String TAG = "Practica 4";
     private MyAsyncTask myTask = null;
+
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -29,7 +46,7 @@ public class MainActivity extends AppCompatActivity
             // Evita crear una AsyncTask cada vez que, por ejemplo, hay una rotación
             Log.i(TAG, "onCreate: About to create MyAsyncTask");
            // myTask = new MyAsyncTask(this);
-            String url_flickr = "https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=f0fdbd3356ec2eb09238097f7f07544f&format=json&extras=tags";    //REVISAR: extras=tags ¿necesario para los hashtag que pide el guion?
+            String url_flickr = "https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=8fc8cff47099f5643e1feb9c945f1493&format=json&extras=tags";    //REVISAR: extras=tags ¿necesario para los hashtag que pide el guion?
 
             new MyAsyncTask().execute(url_flickr);
 
@@ -40,6 +57,8 @@ public class MainActivity extends AppCompatActivity
         else
             myTask.attach(this);
         Toast.makeText(this, "Hola!", Toast.LENGTH_LONG).show();
+
+        listview = (ListView) findViewById(R.id.listview); //https://naps.com.mx/blog/uso-de-un-listview-en-android/
     }
     /** Permite devolver un objeto y que persista entre cambios de configuración. Lo
      invoca el sistema cuando se va a destruir una actividad y se sabe que se va a
@@ -52,11 +71,26 @@ public class MainActivity extends AppCompatActivity
         // Devuelvo mi tarea, para que no se cree de nuevo cada vez
         return myTask;
     }
-    public void setupAdapter(Integer integer)
+
+
+
+    public void setupAdapter(List<imagenFlickr> listaImagenes)
     {
+
+
+        ArrayAdapter<imagenFlickr> adapter = new ArrayAdapter<imagenFlickr>(this, android.R.layout.simple_list_item_1, listaImagenes);
+
+        listview.setAdapter(adapter);
+
+       /*
         if (integer != -1)
             Toast.makeText(MainActivity.this,
                     "Codigo de respuesta: " + integer, Toast.LENGTH_LONG).show();
+
+        */
+
+
+
     }
 }
 

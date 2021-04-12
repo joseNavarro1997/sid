@@ -62,6 +62,14 @@
         android:translationX="170dp"
         android:translationY="650dp"/>
 
+    <!-- GUI diseño Android Studio
+        -->
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="48dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
     <!--
     <com.google.android.material.textfield.TextInputLayout

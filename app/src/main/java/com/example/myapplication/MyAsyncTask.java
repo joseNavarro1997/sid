@@ -25,6 +25,7 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
     }
     HttpURLConnection urlConnection;    //conexion. Referencia: https://stackoverflow.com/questions/29465996/how-to-get-json-object-using-httpurlconnection-instead-of-volley
 
+    List<imagenFlickr> listaImagenes;
 
     //Constructor
     public MyAsyncTask() {
@@ -43,6 +44,10 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
         //If para debug
         if(params[0] != null){
             Log.i("MyAsyncTask -> parametro 0", params[0]); //DEBUG
+        }
+
+        if(params[1] != null){
+            Log.i("MyAsyncTask -> parametro 1", params[1]); //DEBUG
         }
 
         StringBuilder result = new StringBuilder();
@@ -82,9 +87,10 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
 
 
     }
+
     public void leerDatosJSON(String datos) throws JSONException {
         //JSONObject json = new JSONObject(datos);
-        List<imagenFlickr> listaImagenes = new ArrayList<imagenFlickr>();
+        listaImagenes = new ArrayList<imagenFlickr>();
         for (int i=0; i< datos.length(); i++){
             String subString = datos.substring(datos.indexOf("{"), datos.indexOf("}")+1);
             try{
@@ -100,11 +106,8 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
             }
             datos = datos.substring(datos.indexOf("}")+1);
             //System.out.println(subString);
+
         }
-
-
-
-
 
     }
 /*
@@ -195,7 +198,7 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
         if (mActivity == null)
             Log.i("MyAsyncTask", "Me salto onPostExecute() -- no hay nueva activity");
         else{}
-            //mActivity.setupAdapter(integer);
+            mActivity.setupAdapter(listaImagenes);
     }
     void detach()
     {
