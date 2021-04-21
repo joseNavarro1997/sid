@@ -4,14 +4,13 @@ package com.example.myapplication;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 //package com.example.fbobillo.testapplication3;
 
@@ -22,19 +21,19 @@ public class MainActivity extends AppCompatActivity
     private ListView listview;
     private ArrayList<String> names;
 
-    List<imagenFlickr> listaImagenes = new ArrayList<imagenFlickr>();
+    //List<imagenFlickr> listaImagenes = new ArrayList<imagenFlickr>();
 
     private final static String TAG = "Practica 4";
     private MyAsyncTask myTask = null;
-
+    private ImagenAdapter itemAdapter; // Adaptador personalizado
+    private List <imagenFlickr> listaImagenes; // Lista de imagenes
 
 
 
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         // Looper // usamos Looper para comportamiento sincrono ?
 
         super.onCreate(savedInstanceState);
@@ -45,7 +44,7 @@ public class MainActivity extends AppCompatActivity
         if (myTask == null) {
             // Evita crear una AsyncTask cada vez que, por ejemplo, hay una rotación
             Log.i(TAG, "onCreate: About to create MyAsyncTask");
-           // myTask = new MyAsyncTask(this);
+            // myTask = new MyAsyncTask(this);
             String url_flickr = "https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=8fc8cff47099f5643e1feb9c945f1493&format=json&extras=tags";    //REVISAR: extras=tags ¿necesario para los hashtag que pide el guion?
 
             new MyAsyncTask(this).execute(url_flickr);
@@ -53,15 +52,15 @@ public class MainActivity extends AppCompatActivity
             //String respuesta = new MyAsyncTask().execute();
             //Log.i("La respuesta ha sido:", respuesta);
             Log.i(TAG, "onCreate: DEBUG 1");
-        }
-        else
+        } else
             myTask.attach(this);
         Toast.makeText(this, "Hola!", Toast.LENGTH_LONG).show();
 
-        listview = (ListView) findViewById(R.id.listview); //https://naps.com.mx/blog/uso-de-un-listview-en-android/
+        listview = findViewById(R.id.listview);
+        ImagenAdapter imagenAdapter = new ImagenAdapter(MainActivity.this, R.layout.imagen, listaImagenes);
+        listview.setAdapter(imagenAdapter);
     }
 
-    
     /** Permite devolver un objeto y que persista entre cambios de configuración. Lo
      invoca el sistema cuando se va a destruir una actividad y se sabe que se va a
      crear otra nueva inmediatamente. Se llama entre onStop y onDestroy. */
@@ -76,9 +75,10 @@ public class MainActivity extends AppCompatActivity
 
 
 
-    public void setupAdapter(List<imagenFlickr> listaImagenes)
+    public void setupAdapter(List<imagenFlickr> listaImagenes1)
     {
-
+        listaImagenes= listaImagenes1;
+        /*
         System.out.println("listaImagenesFlickr 1: " + listaImagenes);
 
         ArrayAdapter<imagenFlickr> adapter = new ArrayAdapter<imagenFlickr>(this, android.R.layout.simple_list_item_1, listaImagenes);
