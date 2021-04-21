@@ -19,18 +19,20 @@ import java.util.List;
 public class MyAsyncTask extends AsyncTask<String, Void, String>
 {
     private MainActivity mActivity = null;
+
+
     public MyAsyncTask(MainActivity activity)
     {
         attach(activity);
     }
+
+
     HttpURLConnection urlConnection;    //conexion. Referencia: https://stackoverflow.com/questions/29465996/how-to-get-json-object-using-httpurlconnection-instead-of-volley
 
-    List<imagenFlickr> listaImagenes;
+    public List<imagenFlickr> listaImagenes = new ArrayList<imagenFlickr>();
 
-    //Constructor
-    public MyAsyncTask() {
 
-    }
+
 
     /**
      * Parte del código extraída de la siguiente web/referencia: https://stackoverflow.com/questions/29465996/how-to-get-json-object-using-httpurlconnection-instead-of-volley
@@ -44,10 +46,6 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
         //If para debug
         if(params[0] != null){
             Log.i("MyAsyncTask -> parametro 0", params[0]); //DEBUG
-        }
-
-        if(params[1] != null){
-            Log.i("MyAsyncTask -> parametro 1", params[1]); //DEBUG
         }
 
         StringBuilder result = new StringBuilder();
@@ -82,6 +80,8 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+
         return result.toString();
 
 
@@ -90,8 +90,10 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
 
     public void leerDatosJSON(String datos) throws JSONException {
         //JSONObject json = new JSONObject(datos);
-        listaImagenes = new ArrayList<imagenFlickr>();
+       // listaImagenes = new ArrayList<imagenFlickr>();
+
         for (int i=0; i< datos.length(); i++){
+
             String subString = datos.substring(datos.indexOf("{"), datos.indexOf("}")+1);
             try{
                 JSONObject array = new JSONObject(subString);
@@ -99,8 +101,11 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
                         array.getString("secret"), array.getString("server"),
                         array.getString("farm"), array.getString("ispublic"),
                         array.getString("isfriend"), array.getString("isfamily"), array.getString("title"), array.getString("tags"));
-                listaImagenes.add(imagen);
-                System.out.println(imagen.toString());
+
+                listaImagenes.add(imagen);  //rellenar lista imagenes con nueva imagen parseada
+
+                System.out.println("IMAGEN_FLICKR: " + imagen.toString());
+
             }catch (JSONException e){
                 e.printStackTrace();
             }
@@ -108,6 +113,9 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
             //System.out.println(subString);
 
         }
+
+       // mActivity.setupAdapter(listaImagenes);
+
 
     }
 /*
@@ -197,15 +205,26 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
     {
         if (mActivity == null)
             Log.i("MyAsyncTask", "Me salto onPostExecute() -- no hay nueva activity");
-        else{}
+        else {
+            Log.i("MyAsyncTask", "Antes del adapter");
+
+            System.out.println("listaImagenesFlickr: " + listaImagenes);
+
             mActivity.setupAdapter(listaImagenes);
+            Log.i("MyAsyncTask", "Despues del adapter");
+        }
     }
+
     void detach()
     {
+
         this.mActivity = null;
     }
+
+
     void attach(MainActivity activity)
     {
+
         this.mActivity = activity;
     }
 }

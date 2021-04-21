@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity
            // myTask = new MyAsyncTask(this);
             String url_flickr = "https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=8fc8cff47099f5643e1feb9c945f1493&format=json&extras=tags";    //REVISAR: extras=tags ¿necesario para los hashtag que pide el guion?
 
-            new MyAsyncTask().execute(url_flickr);
+            new MyAsyncTask(this).execute(url_flickr);
 
             //String respuesta = new MyAsyncTask().execute();
             //Log.i("La respuesta ha sido:", respuesta);
@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity
 
         listview = (ListView) findViewById(R.id.listview); //https://naps.com.mx/blog/uso-de-un-listview-en-android/
     }
+
+    
     /** Permite devolver un objeto y que persista entre cambios de configuración. Lo
      invoca el sistema cuando se va a destruir una actividad y se sabe que se va a
      crear otra nueva inmediatamente. Se llama entre onStop y onDestroy. */
@@ -77,10 +79,17 @@ public class MainActivity extends AppCompatActivity
     public void setupAdapter(List<imagenFlickr> listaImagenes)
     {
 
+        System.out.println("listaImagenesFlickr 1: " + listaImagenes);
 
         ArrayAdapter<imagenFlickr> adapter = new ArrayAdapter<imagenFlickr>(this, android.R.layout.simple_list_item_1, listaImagenes);
 
+        System.out.println("listaImagenesFlickr 2: " + listaImagenes);
+
+        listview = (ListView) findViewById(R.id.listview); //https://naps.com.mx/blog/uso-de-un-listview-en-android/
+
         listview.setAdapter(adapter);
+
+        System.out.println("DEBUG 3: " + listaImagenes);
 
        /*
         if (integer != -1)
@@ -93,6 +102,8 @@ public class MainActivity extends AppCompatActivity
 
     }
 }
+
+
 
 
 /*
