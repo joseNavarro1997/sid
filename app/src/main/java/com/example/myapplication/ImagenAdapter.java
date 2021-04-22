@@ -43,9 +43,7 @@ public class ImagenAdapter extends ArrayAdapter<imagenFlickr> {
         ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
         Picasso.get().load(imagen.getUrl_imagen()).into(imageView);
         TextView textView = view.findViewById(R.id.textView);
-        textView.setText("Título: " + imagen.getTitle());
-        TextView textViewH = view.findViewById(R.id.hastags_id);
-        textViewH.setText("Hashtags: " + imagen.getTags());
+        textView.setText("Título: " + imagen.getTitle() + "\nHashtags: " + imagen.getTags() + "\nUrl: " + imagen.getUrl_imagen() );
         return view;
         /*imagenFlickr imagenFlickr = getItem(position);
         View view = LayoutInflater.from(getContext()).inflate(newId,parent,false);
