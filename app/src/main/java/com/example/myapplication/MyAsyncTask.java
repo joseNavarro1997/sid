@@ -30,7 +30,7 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
     HttpURLConnection urlConnection;    //conexion. Referencia: https://stackoverflow.com/questions/29465996/how-to-get-json-object-using-httpurlconnection-instead-of-volley
 
     public List<imagenFlickr> listaImagenes = new ArrayList<imagenFlickr>();
-
+    private ImagenAdapter adapter;
 
 
 
@@ -73,7 +73,7 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
         Log.i("MyAsyncTask -> respuesta! ", result.toString());//DEBUG
         List<imagenFlickr> lista = new ArrayList<>();
         try {
-            //System.out.println(result.toString());
+            System.out.println(result.toString());
             String output = result.toString().substring(result.toString().indexOf("\"photo\"") );
             //System.out.println(output);
             leerDatosJSON(output);
@@ -118,84 +118,7 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
 
 
     }
-/*
-    public List<imagenFlickr> readJsonStream(String in) throws IOException {
-        // Nueva instancia JsonReader
-        JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
-        try {
-            // Leer Array
-            return leerArrayImagenes(reader);
-        } finally {
-            reader.close();
-        }
 
-    }
-
-    public List<imagenFlickr> leerArrayImagenes(JsonReader reader) throws IOException {
-        // Lista temporal
-
-        List<imagenFlickr> imagenes = new ArrayList();
-        reader.beginObject();
-        Log.i("MyAsyncTask -> imagen! ", "empezado");
-
-        while (reader.hasNext()) {
-            // Leer objeto
-            imagenes.add(leerImagen(reader));
-
-        }
-        System.out.println(imagenes);
-        reader.endObject();
-        return imagenes;
-    }
-
-    public imagenFlickr leerImagen(JsonReader reader) throws IOException {
-        String id = null;   //id de la imagen
-        String owner = null;   //owner
-        String secret = null;   //secret
-        String server = null;   //server
-        String farm = null;   //title
-        String ispublic = null; //isPublic
-        String isfriend = null; //isfriend
-        String isfamily = null; //isfamily
-        // List<String> hastags = null;    //lista de hashtags
-        reader.beginObject();
-        while (reader.hasNext()) {
-            String name = reader.nextName();
-            Log.i("MyAsyncTask -> imagen! ", name);
-            switch (name) {
-                case "id":
-                    id = reader.nextString();
-                    break;
-                case "owner":
-                    owner = reader.nextString();
-                    break;
-                case "secret":
-                    secret = reader.nextString();
-                    break;
-                case "server":
-                    server = reader.nextString();
-                    break;
-                case "farm":
-                    farm = reader.nextString();
-                    break;
-                case "ispublic":
-                    ispublic = reader.nextString();
-                    break;
-                case "isfriend":
-                    isfriend = reader.nextString();
-                    break;
-                case "isfamily":
-                    isfamily = reader.nextString();
-                    break;
-                default:
-                    reader.skipValue();
-                    break;
-            }
-        }
-        reader.endObject();
-        return new imagenFlickr(id, owner, secret, server, farm, ispublic, isfriend, isfamily);
-    }
-*/
     /**
      *
      * @param param
@@ -208,7 +131,6 @@ public class MyAsyncTask extends AsyncTask<String, Void, String>
         else {
             Log.i("MyAsyncTask", "Antes del adapter");
 
-            System.out.println("listaImagenesFlickr: " + listaImagenes);
 
             mActivity.setupAdapter(listaImagenes);
             Log.i("MyAsyncTask", "Despues del adapter");

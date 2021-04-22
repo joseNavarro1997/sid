@@ -161,27 +161,21 @@ public class imagenFlickr {
             ", farm: " + farm + ", ispublic: " + ispublic + ", isfriend: " + isfriend +
             ", isfamily: " + isfriend + ", tags: " + tags + ", title: " + title + ", url_imagen: " + url_imagen;
     }
-    /*
+
     //métodos GET (devuelven el valor del campo correspondiente)
 
     public String getId(){
         return this.id;
     }
-    public String getUrl_imagen(){
-        return getUrl_imagen();
-    }
+
 
     public String getTitulo(){
-        return titulo;
+        return title;
     }
 
-    public URL getUrl(){
-        return url;
-    }
 
     public List<String> getHastags(){
         return hastags;
     }
-    */
 
 }

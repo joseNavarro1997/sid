@@ -2,12 +2,19 @@
 package com.example.myapplication;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,15 +25,16 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
 {
     //Para GUI
-    private ListView listview;
+
     private ArrayList<String> names;
 
     //List<imagenFlickr> listaImagenes = new ArrayList<imagenFlickr>();
 
     private final static String TAG = "Practica 4";
     private MyAsyncTask myTask = null;
-    private ImagenAdapter itemAdapter; // Adaptador personalizado
-    private List <imagenFlickr> listaImagenes; // Lista de imagenes
+    private ImagenAdapter imagenAdapter; // Adaptador personalizado
+    private List <imagenFlickr> listaImagenes = new ArrayList<>() ; // Lista de imagenes
+    private ListView listview;
 
 
 
@@ -37,8 +45,10 @@ public class MainActivity extends AppCompatActivity
         // Looper // usamos Looper para comportamiento sincrono ?
 
         super.onCreate(savedInstanceState);
-        Log.i(TAG, "onCreate");
         setContentView(R.layout.activity_main);
+
+        Log.i(TAG, "onCreate");
+
         // Para obtener el valor devuelto en onRetainCustomNonConfigurationInstance
         myTask = (MyAsyncTask) getLastCustomNonConfigurationInstance();
         if (myTask == null) {
@@ -54,12 +64,18 @@ public class MainActivity extends AppCompatActivity
             Log.i(TAG, "onCreate: DEBUG 1");
         } else
             myTask.attach(this);
-        Toast.makeText(this, "Hola!", Toast.LENGTH_LONG).show();
 
-        listview = findViewById(R.id.listview);
-        ImagenAdapter imagenAdapter = new ImagenAdapter(MainActivity.this, R.layout.imagen, listaImagenes);
-        listview.setAdapter(imagenAdapter);
+        Button button = findViewById(R.id.button_id);
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
+
+
 
     /** Permite devolver un objeto y que persista entre cambios de configuración. Lo
      invoca el sistema cuando se va a destruir una actividad y se sabe que se va a
@@ -77,28 +93,19 @@ public class MainActivity extends AppCompatActivity
 
     public void setupAdapter(List<imagenFlickr> listaImagenes1)
     {
-        listaImagenes= listaImagenes1;
+
+
+        listview = (ListView) findViewById(R.id.listView);
+        imagenAdapter = new ImagenAdapter(MainActivity.this, R.layout.imagen, listaImagenes1);
+        listview.setAdapter(imagenAdapter);
+
+
         /*
-        System.out.println("listaImagenesFlickr 1: " + listaImagenes);
+        //listview = (ListView) findViewById(R.id.exp2);
+        imagenAdapter = new ImagenAdapter(MainActivity.this, R.layout.imagen, listaImagenes);
+        //listview.setAdapter(imagenAdapter);
 
-        ArrayAdapter<imagenFlickr> adapter = new ArrayAdapter<imagenFlickr>(this, android.R.layout.simple_list_item_1, listaImagenes);
-
-        System.out.println("listaImagenesFlickr 2: " + listaImagenes);
-
-        listview = (ListView) findViewById(R.id.listview); //https://naps.com.mx/blog/uso-de-un-listview-en-android/
-
-        listview.setAdapter(adapter);
-
-        System.out.println("DEBUG 3: " + listaImagenes);
-
-       /*
-        if (integer != -1)
-            Toast.makeText(MainActivity.this,
-                    "Codigo de respuesta: " + integer, Toast.LENGTH_LONG).show();
-
-        */
-
-
+         */
 
     }
 }
