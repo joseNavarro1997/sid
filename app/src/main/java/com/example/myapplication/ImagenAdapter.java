@@ -1,9 +1,6 @@
 package com.example.myapplication;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +12,6 @@ import androidx.annotation.NonNull;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 
 public class ImagenAdapter extends ArrayAdapter<imagenFlickr> {
@@ -44,6 +37,15 @@ public class ImagenAdapter extends ArrayAdapter<imagenFlickr> {
         Picasso.get().load(imagen.getUrl_imagen()).into(imageView);
         TextView textView = view.findViewById(R.id.textView);
         textView.setText("Título: " + imagen.getTitle() + "\nHashtags: " + imagen.getTags() + "\nUrl: " + imagen.getUrl_imagen() );
+//        imageView.setTag(String.valueOf(position));
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent visorImage = new Intent(mContext, VisorDeImagen.class);
+//                visorImage.putExtra("IMG", mList.get((Integer) v.getTag()).getUrl_imagen());
+//                mContext.startActivity(visorImage);
+//            }
+ //       });
         return view;
         /*imagenFlickr imagenFlickr = getItem(position);
         View view = LayoutInflater.from(getContext()).inflate(newId,parent,false);
@@ -52,5 +54,6 @@ public class ImagenAdapter extends ArrayAdapter<imagenFlickr> {
         text.setText(imagenFlickr.getTitle());
         image.setImageResource(Integer.parseInt(imagenFlickr.getUrl_imagen()));
         return view;*/
+
     }
 }

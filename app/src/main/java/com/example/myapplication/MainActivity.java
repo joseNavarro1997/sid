@@ -2,15 +2,13 @@
 package com.example.myapplication;
 
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ExpandableListView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -55,7 +53,7 @@ public class MainActivity extends AppCompatActivity
             // Evita crear una AsyncTask cada vez que, por ejemplo, hay una rotación
             Log.i(TAG, "onCreate: About to create MyAsyncTask");
             // myTask = new MyAsyncTask(this);
-            String url_flickr = "https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=8fc8cff47099f5643e1feb9c945f1493&format=json&extras=tags";    //REVISAR: extras=tags ¿necesario para los hashtag que pide el guion?
+            String url_flickr = "https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=49df8b7abe7e3c84de808135a5cc73d2&format=json&extras=tags";    //REVISAR: extras=tags ¿necesario para los hashtag que pide el guion?
 
             new MyAsyncTask(this).execute(url_flickr);
 
@@ -73,6 +71,8 @@ public class MainActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
+
+
     }
 
 
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-    public void setupAdapter(List<imagenFlickr> listaImagenes1)
+    public void setupAdapter(final List<imagenFlickr> listaImagenes1)
     {
 
 
@@ -99,7 +99,16 @@ public class MainActivity extends AppCompatActivity
         imagenAdapter = new ImagenAdapter(MainActivity.this, R.layout.imagen, listaImagenes1);
         listview.setAdapter(imagenAdapter);
 
-
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent visorDetails = new Intent(view.getContext(), VisorDeImagen.class);
+                visorDetails.putExtra("IMG", listaImagenes1.get(position).getUrl_imagen());
+                visorDetails.putExtra("TIT", listaImagenes1.get(position).getTitle());
+                visorDetails.putExtra("TAGS", listaImagenes1.get(position).getTags());
+                startActivity(visorDetails);
+            }
+        });
         /*
         //listview = (ListView) findViewById(R.id.exp2);
         imagenAdapter = new ImagenAdapter(MainActivity.this, R.layout.imagen, listaImagenes);
